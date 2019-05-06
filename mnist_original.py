@@ -1,3 +1,5 @@
+import numpy as np
+
 class perceptron:
     def __init__(self, input_dim, hidden_dim, output_dim, lr=0.01):
         self.w1 = np.random.normal(0.0, pow(hidden_dim, -0.5), (input_dim, hidden_dim))
