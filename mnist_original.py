@@ -71,7 +71,7 @@ for k in range(epoch):
 
         pct.training(inputs, targets)
 
-test_dataset_file = open("mnist_test_200.csv", 'r')
+test_dataset_file = open("mnist_test.csv", 'r')
 
 test_dataset_list = test_dataset_file.readlines()
 test_dataset_list = test_dataset_list[1:]
