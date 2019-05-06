@@ -81,7 +81,7 @@ class perceptron:
 #### Training
 
 input_dim = 784
-hidden_dim = 80
+hidden_dim = 120
 output_dim = 10
 epoch = 15
 
