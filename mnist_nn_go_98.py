@@ -16,8 +16,8 @@ class perceptron:
 #         e_x = np.exp(x-np.max(x))
 #         return e_x / e_x.sum(axis=0)
 
-#     def sigmoid(self, x):
-#         return 1 / (1+np.exp(-x))
+    def sigmoid(self, x):
+        return 1 / (1+np.exp(-x))
 
 #     def ReLU(self, x):
 #         return x * (x > 0)
@@ -31,8 +31,8 @@ class perceptron:
     def feedforward(self, x):
         a = x.astype(float)
         b = self.w1.astype(float)
-        self.h = self.tanh(np.dot(a,b))
-        return self.tanh(np.dot(self.h, self.w2))
+        self.h = self.sigmoid(np.dot(a,b))
+        return self.sigmoid(np.dot(self.h, self.w2))
 
 #     def feedforward_upto_hidden(self, x):
 #         a = x.astype(float)
@@ -40,11 +40,11 @@ class perceptron:
 #         return self.tanh(np.dot(a,b))
 
     def bprop_w2(self, g, y):
-        q = (-2)*(g-y)*(1-y**2)
+        q = (-2)*(g-y)*y*(1-y)
         return np.dot(self.h.reshape(self.hidden_dim, 1), q.reshape(1, self.output_dim))
 
     def bprop_w1(self, g, y, x):
-        q1 = (-2)*(g-y)*(1-y**2)
+        q1 = (-2)*(g-y)*y*(1-y)
         q2 = np.dot(self.w2, q1)
         return np.dot(x.reshape(self.input_dim, 1), q2.reshape(1, self.hidden_dim))
 
@@ -84,9 +84,9 @@ class perceptron:
 input_dim = 784
 hidden_dim = 300
 output_dim = 10
-epoch = 30
+epoch = 10
 
-pct = perceptron(input_dim, hidden_dim, output_dim, lr=0.01)
+pct = perceptron(input_dim, hidden_dim, output_dim, lr=0.05)
 
 training_dataset_file = open("mnist_train.csv", 'r')
 
@@ -140,9 +140,9 @@ for i in test_dataset_list:
 
     else:
         failure += 1
-        print("prediction fails, (target, prediction) = ", target, prediction)
-        print("Prediction = ", prediction_list)
-        im_array = np.asfarray(all_values_normalized).reshape((28,28))
-        plt.imshow(im_array, cmap='Greys', interpolation='None')
+        # print("prediction fails, (target, prediction) = ", target, prediction)
+        # print("Prediction = ", prediction_list)
+        # im_array = np.asfarray(all_values_normalized).reshape((28,28))
+        # plt.imshow(im_array, cmap='Greys', interpolation='None')
 
 print("Recognition error rate = ", (failure/(success+failure)))
