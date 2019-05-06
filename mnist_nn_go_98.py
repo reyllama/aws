@@ -81,11 +81,11 @@ class perceptron:
 #### Training
 
 input_dim = 784
-hidden_dim = 300
+hidden_dim = 80
 output_dim = 10
-epoch = 20
+epoch = 15
 
-pct = perceptron(input_dim, hidden_dim, output_dim, lr=0.005)
+pct = perceptron(input_dim, hidden_dim, output_dim, lr=0.01)
 
 training_dataset_file = open("mnist_train.csv", 'r')
 
