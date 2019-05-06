@@ -30,8 +30,8 @@ class perceptron:
     def feedforward(self, x):
         a = x.astype(float)
         b = self.w1.astype(float)
-        self.h = self.tanh(np.dot(a,b))
-        return self.tanh(np.dot(self.h, self.w2))
+        self.h = self.sigmoid(np.dot(a,b))
+        return self.sigmoid(np.dot(self.h, self.w2))
 
 #     def feedforward_upto_hidden(self, x):
 #         a = x.astype(float)
@@ -39,11 +39,11 @@ class perceptron:
 #         return self.tanh(np.dot(a,b))
 
     def bprop_w2(self, g, y):
-        q = (-2)*(g-y)*(1-y**2)
+        q = (-2)*(g-y)*y*(1-y)
         return np.dot(self.h.reshape(self.hidden_dim, 1), q.reshape(1, self.output_dim))
 
     def bprop_w1(self, g, y, x):
-        q1 = (-2)*(g-y)*(1-y**2)
+        q1 = (-2)*(g-y)*y*(1-y)
         q2 = np.dot(self.w2, q1)
         return np.dot(x.reshape(self.input_dim, 1), q2.reshape(1, self.hidden_dim))
 
@@ -81,7 +81,7 @@ class perceptron:
 #### Training
 
 input_dim = 784
-hidden_dim = 200
+hidden_dim = 300
 output_dim = 10
 epoch = 20
 
