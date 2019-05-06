@@ -1,5 +1,4 @@
 import numpy as np
-import matplotlib.pyplot as plt
 
 class perceptron:
     def __init__(self, input_dim, hidden_dim, output_dim, lr=0.01):
@@ -12,9 +11,9 @@ class perceptron:
         self.output_dim = output_dim
         self.theta = 0
 
-#     def softmax(self, x):
-#         e_x = np.exp(x-np.max(x))
-#         return e_x / e_x.sum(axis=0)
+    def softmax(self, x):
+        e_x = np.exp(x-np.max(x))
+        return e_x / e_x.sum(axis=0)
 
     def sigmoid(self, x):
         return 1 / (1+np.exp(-x))
@@ -31,8 +30,8 @@ class perceptron:
     def feedforward(self, x):
         a = x.astype(float)
         b = self.w1.astype(float)
-        self.h = self.sigmoid(np.dot(a,b))
-        return self.sigmoid(np.dot(self.h, self.w2))
+        self.h = self.tanh(np.dot(a,b))
+        return self.tanh(np.dot(self.h, self.w2))
 
 #     def feedforward_upto_hidden(self, x):
 #         a = x.astype(float)
@@ -40,11 +39,11 @@ class perceptron:
 #         return self.tanh(np.dot(a,b))
 
     def bprop_w2(self, g, y):
-        q = (-2)*(g-y)*y*(1-y)
+        q = (-2)*(g-y)*(1-y**2)
         return np.dot(self.h.reshape(self.hidden_dim, 1), q.reshape(1, self.output_dim))
 
     def bprop_w1(self, g, y, x):
-        q1 = (-2)*(g-y)*y*(1-y)
+        q1 = (-2)*(g-y)*(1-y**2)
         q2 = np.dot(self.w2, q1)
         return np.dot(x.reshape(self.input_dim, 1), q2.reshape(1, self.hidden_dim))
 
@@ -82,11 +81,11 @@ class perceptron:
 #### Training
 
 input_dim = 784
-hidden_dim = 100
+hidden_dim = 200
 output_dim = 10
-epoch = 10
+epoch = 20
 
-pct = perceptron(input_dim, hidden_dim, output_dim, lr=0.01)
+pct = perceptron(input_dim, hidden_dim, output_dim, lr=0.005)
 
 training_dataset_file = open("mnist_train.csv", 'r')
 
@@ -94,10 +93,9 @@ training_dataset_list = training_dataset_file.readlines()
 training_dataset_list = training_dataset_list[1:]
 training_dataset_file.close()
 input_list = list()
-pr = 0
 
 for k in range(epoch):
-    print("{0}% 진행중".format(pr))
+    print("{0}% 진행중".format(k*100/epoch))
     pct.lr = pct.lr * 0.8    #### lr 안줄이면 최근에 배운것을 중요하게 생각해서 과거 배움을 지워버릴 수 있음
     for i in training_dataset_list:
         all_values = i.split(',')
@@ -109,7 +107,6 @@ for k in range(epoch):
         targets[int(all_values[0])] = 0.99                          #### 실제 손글씨 label 값은 0.99 로 둔다. / one-hot encoding
 
         pct.training(inputs, targets)
-    pr += 10
 
 #### all_values[0]은 그 픽셀 숫자의 Label / all_values[1:]은 각 픽셀값
 
