@@ -54,6 +54,7 @@ pct = perceptron(input_dim, hidden_dim, output_dim, lr=0.1)
 training_dataset_file = open("mnist_train.csv", 'r')
 
 training_dataset_list = training_dataset_file.readlines()
+training_dataset_list = training_dataset_list[1:]
 training_dataset_file.close()
 input_list = list()
 
@@ -73,6 +74,7 @@ for k in range(epoch):
 test_dataset_file = open("mnist_test_200.csv", 'r')
 
 test_dataset_list = test_dataset_file.readlines()
+test_dataset_list = test_dataset_list[1:]
 test_dataset_file.close()
 output_list = list()
 
