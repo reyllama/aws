@@ -4,7 +4,7 @@ import boto3
 s3 = boto3.client('s3')
 
 # directory + filename 을 넣고 filename으로 저장
-dir_name  = 'C:/Users/documents/2019-1/machine_learning/assignments'
+dir_name  = 'C:/Users/documents/2019-1/machine_learning/assignments/'
 filename = 'mnist_train.csv'
 bucket_name = 'chaerin-dataset'
 
