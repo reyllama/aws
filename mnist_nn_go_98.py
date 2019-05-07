@@ -90,11 +90,11 @@ class perceptron:
 #### Training
 
 input_dim = 784
-hidden_dim = 30
+hidden_dim = 100
 output_dim = 10
 epoch = 10
 
-pct = perceptron(input_dim, hidden_dim, output_dim, lr=0.005)
+pct = perceptron(input_dim, hidden_dim, output_dim, lr=0.01)
 
 training_dataset_file = open("mnist_train.csv", 'r')
 
@@ -105,7 +105,7 @@ input_list = list()
 
 for k in range(epoch):
     print("{0}% 진행중".format(k*100/epoch))
-    pct.lr = pct.lr * 0.8    #### lr 안줄이면 최근에 배운것을 중요하게 생각해서 과거 배움을 지워버릴 수 있음
+    pct.lr = pct.lr * 0.9    #### lr 안줄이면 최근에 배운것을 중요하게 생각해서 과거 배움을 지워버릴 수 있음
     for i in training_dataset_list:
         all_values = i.split(',')
         inputs = (np.asfarray(all_values[1:])/255.0*0.99) + 0.01    #### 흰색 부분이라고 해서 0을 줘버리면 x*w1*w2 하는데 영향력이 아예 0
