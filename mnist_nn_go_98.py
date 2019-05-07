@@ -39,7 +39,7 @@ class perceptron:
     #     return self.tanh(np.dot(a,b))
 
     def bprop_w2(self, g, y):
-        q = (-2)*(g-y)*relu_prime(np.dot(self.h, self.w2))
+        q = (-2)*(g-y)*self.relu_prime(np.dot(self.h, self.w2))
         return np.dot(self.h.reshape(self.hidden_dim, 1), q.reshape(1, self.output_dim))
 
     # def bprop_w2(self, g, y):
@@ -52,7 +52,7 @@ class perceptron:
     #     return np.dot(x.reshape(self.input_dim, 1), q2.reshape(1, self.hidden_dim))
 
     def bprop_w1(self, g, y, x):
-        q1 = (-2)*(g-y)*relu_prime(np.dot(self.h, self.w2))
+        q1 = (-2)*(g-y)*self.relu_prime(np.dot(self.h, self.w2))
         q2 = np.dot(self.w2, q1)
         return np.dot(x.reshape(self.input_dim, 1), q2.reshape(1, self.hidden_dim))
 
