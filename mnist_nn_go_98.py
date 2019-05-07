@@ -18,11 +18,11 @@ class perceptron:
     def sigmoid(self, x):
         return 1 / (1+np.exp(-x))
 
-#     def ReLU(self, x):
-#         return x * (x > 0)
+    def relu(self, x):
+        return x * (x > 0)
 
-#     def ReLU_dev(self, x):
-#         return (x>0).astype(x.dtype)
+    def relu_prime(self, x):
+        return (x>0).astype(x.dtype)
 
     def tanh(self, x):
         return (np.exp(x)-np.exp(-x)) / (np.exp(x) + np.exp(-x))
@@ -30,16 +30,16 @@ class perceptron:
     def feedforward(self, x):
         a = x.astype(float)
         b = self.w1.astype(float)
-        self.h = self.tanh(np.dot(a,b))
-        return self.tanh(np.dot(self.h, self.w2))
-
-#     def feedforward_upto_hidden(self, x):
-#         a = x.astype(float)
-#         b = self.w1.astype(float)
-#         return self.tanh(np.dot(a,b))
+        self.h = self.relu(np.dot(a,b))
+        return self.relu(np.dot(self.h, self.w2))
+    #
+    # def feedforward_upto_hidden(self, x):
+    #     a = x.astype(float)
+    #     b = self.w1.astype(float)
+    #     return self.tanh(np.dot(a,b))
 
     def bprop_w2(self, g, y):
-        q = (-2)*(g-y)*(1-y**2)
+        q = (-2)*(g-y)*relu_prime(np.dot(self.h, self.w2))
         return np.dot(self.h.reshape(self.hidden_dim, 1), q.reshape(1, self.output_dim))
 
     # def bprop_w2(self, g, y):
@@ -52,7 +52,7 @@ class perceptron:
     #     return np.dot(x.reshape(self.input_dim, 1), q2.reshape(1, self.hidden_dim))
 
     def bprop_w1(self, g, y, x):
-        q1 = (-2)*(g-y)*(1-y**2)
+        q1 = (-2)*(g-y)*relu_prime(np.dot(self.h, self.w2))
         q2 = np.dot(self.w2, q1)
         return np.dot(x.reshape(self.input_dim, 1), q2.reshape(1, self.hidden_dim))
 
@@ -90,9 +90,9 @@ class perceptron:
 #### Training
 
 input_dim = 784
-hidden_dim = 180
+hidden_dim = 100
 output_dim = 10
-epoch = 15
+epoch = 10
 
 pct = perceptron(input_dim, hidden_dim, output_dim, lr=0.01)
 
