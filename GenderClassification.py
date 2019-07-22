@@ -5,6 +5,8 @@ import boto3
 bucket = "for-gender"
 file_name = "followers_chaerin.csv.csv"
 
+s3_resource = boto3.resource("s3", aws_access_key_id ='AKIA3DLH7IX4QKXSCAET', aws_secret_access_key = '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')
+
 s3 = boto3.client('s3')
 # 's3' is a key word. create connection to S3 using default config and all buckets within S3
 
