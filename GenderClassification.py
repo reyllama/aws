@@ -42,7 +42,7 @@ no_profile = img
 
 ## Store Results in Dict -> DataFrame
 
-data = {'name': [], 'tested': [], 'male': [], 'no_profile': [], 'ratio': []}
+data = {'name': [], 'tested': [], 'male': [], 'no_profile': [], 'male_ratio': []}
 
 ## Missing Values
 
@@ -114,7 +114,10 @@ for influencer in influencers:
         data['tested'].append(tcnt)
         data['male'].append(mcnt)
         data['no_profile'].append(ncnt)
-        data['male_ratio'].append(mcnt*100/(tcnt-ncnt))
+        try:
+            data['male_ratio'].append(mcnt*100/(tcnt-ncnt))
+        except:
+            data['male_ratio'].append('N/A')
 
 
 df = pd.DataFrame(data)
