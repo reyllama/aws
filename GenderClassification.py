@@ -1,9 +1,8 @@
 ## File I/O
-
 import pandas as pd
 import boto3
 
-bucket = "gender"
+bucket = "for-gender"
 file_name = "followers_chaerin.csv.csv"
 
 s3 = boto3.client('s3')
