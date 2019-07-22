@@ -2,7 +2,7 @@
 import pandas as pd
 import boto3
 
-bucket = "for-gender"
+bucket = "btxgh-test"
 file_name = "followers_chaerin.csv.csv"
 
 access_key = input("access key :")
