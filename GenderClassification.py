@@ -5,8 +5,8 @@ import boto3
 bucket = "for-gender"
 file_name = "followers_chaerin.csv.csv"
 
-access_key = input("access 키 입력 :")
-secret_key = input("secret 키 입력 :")
+access_key = input("access key :")
+secret_key = input("secret key :")
 
 s3_resource = boto3.resource("s3", aws_access_key_id =access_key, aws_secret_access_key = secret_key)
 
